@@ -1,0 +1,17 @@
+# Console do H2
+spring.h2.console.enabled=true
+spring.h2.console.path=/h2-console
+
+# Banco de dados H2 (em memória)
+spring.datasource.url=jdbc:h2:mem:testdb
+spring.datasource.driverClassName=org.h2.Driver
+spring.datasource.username=sa
+spring.datasource.password=
+
+# JPA / Hibernate
+spring.jpa.hibernate.ddl-auto=update
+spring.jpa.show-sql=true
+spring.jpa.database-platform=org.hibernate.dialect.H2Dialect
+
+# Porta da aplicação
+server.port=8080

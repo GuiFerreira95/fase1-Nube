@@ -1,0 +1,68 @@
+package com.vehicles.controller;
+
+import com.vehicles.entity.Vehicle;
+import com.vehicles.service.VehicleService;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+@RestController
+@RequestMapping("/vehicles")
+public class VehicleController {
+
+    private final VehicleService service;
+
+    public VehicleController(VehicleService service) {
+        this.service = service;
+    }
+
+    // GET /vehicles
+    @GetMapping
+    public List<Vehicle> getAllVehicles() {
+        return service.findAll();
+    }
+
+    // GET /vehicles/{id}
+    @GetMapping("/{id}")
+    public ResponseEntity<Vehicle> getVehicleById(@PathVariable Long id) {
+        return service.findById(id)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
+    }
+
+    // POST /vehicles
+    @PostMapping
+    public Vehicle createVehicle(@RequestBody Vehicle vehicle) {
+        return service.save(vehicle);
+    }
+
+    // PUT /vehicles/{id}
+    @PutMapping("/{id}")
+    public ResponseEntity<Vehicle> updateVehicle(
+            @PathVariable Long id,
+            @RequestBody Vehicle updatedVehicle) {
+
+        return service.findById(id)
+                .map(vehicle -> {
+                    vehicle.setBrand(updatedVehicle.getBrand());
+                    vehicle.setModel(updatedVehicle.getModel());
+                    vehicle.setYear(updatedVehicle.getYear());
+                    vehicle.setPrice(updatedVehicle.getPrice());
+                    return ResponseEntity.ok(service.save(vehicle));
+                })
+                .orElse(ResponseEntity.notFound().build());
+    }
+
+    // DELETE /vehicles/{id}
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteVehicle(@PathVariable Long id) {
+        return service.findById(id)
+                .map(v -> {
+                    service.delete(id);
+                    return ResponseEntity.noContent().build();
+                })
+                .orElse(ResponseEntity.notFound().build());
+    }
+}
+

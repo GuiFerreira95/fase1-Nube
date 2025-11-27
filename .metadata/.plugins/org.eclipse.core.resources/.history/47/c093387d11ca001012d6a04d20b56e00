@@ -1,0 +1,5 @@
+package com.vehicles.service;
+
+public class VehicleService {
+
+}
