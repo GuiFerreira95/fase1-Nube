@@ -1,0 +1,10 @@
+/target/
+/bin/
+/.metadata/
+/.settings/
+/classpath
+/project
+.idea/
+/*.iml
+
+Add .gitignore to clean repository
