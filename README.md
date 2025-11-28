@@ -52,6 +52,7 @@ src/main/resources
 7️⃣ Observações
 - Este projeto foi desenvolvido para fins acadêmicos e de avaliação no processo seletivo da Nube.
 
-- <img width="1536" height="1024" alt="Sem título" src="https://github.com/user-attachments/assets/6604d608-12a6-4c05-a7c6-71c4e407cdc4" />
+<img width="1536" height="1024" alt="Sem título1" src="https://github.com/user-attachments/assets/0d14bb24-272e-415f-8353-b3859449adda" />
+
 
 
