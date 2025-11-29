@@ -52,6 +52,8 @@ src/main/resources
 7️⃣ Observações
 - Este projeto foi desenvolvido para fins acadêmicos e de avaliação no processo seletivo da Nube.
 
+- Link documentação swagger: http://localhost:8080/swagger-ui/index.html#/
+
 <img width="1536" height="1024" alt="Sem título1" src="https://github.com/user-attachments/assets/0d14bb24-272e-415f-8353-b3859449adda" />
 
 
