@@ -47,7 +47,7 @@ src/main/java/com/veiculos
 - VehicleSalesApplication.java
 
 src/main/resources
-- application.yml
+- application.properties
 
 7️⃣ Observações
 - Este projeto foi desenvolvido para fins acadêmicos e de avaliação no processo seletivo da Nube.
