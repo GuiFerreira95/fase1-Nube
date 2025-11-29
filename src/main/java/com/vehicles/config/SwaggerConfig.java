@@ -1,4 +1,4 @@
-package com.example.demo.SwaggerConfig;
+package com.vehicles.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -14,7 +14,7 @@ public class SwaggerConfig {
         return new OpenAPI()
             .info(new Info()
                 .title("API Veículos")
-                .description("Documentação da API do projeto Nube")
+                .description("Documentação da API de veiculos para o projeto Nube")
                 .version("1.0.0"));
     }
 }

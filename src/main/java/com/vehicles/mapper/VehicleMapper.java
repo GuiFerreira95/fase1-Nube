@@ -1,7 +1,7 @@
-package com.example.demo.mapper;
+package com.vehicles.mapper;
 
-import com.example.demo.dto.VehicleDTO;
-import com.example.demo.entity.Vehicle;
+import com.vehicles.dto.VehicleDTO;
+import com.vehicles.entity.Vehicle;
 
 public class VehicleMapper {
 
