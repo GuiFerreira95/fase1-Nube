@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Fase 1</title>
+  <style>
+    body { font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial; margin: 16px; }
+    header { margin-bottom: 16px; }
+    .card { border: 1px solid #ddd; padding: 12px; border-radius: 8px; max-width: 720px; }
+    input, button { padding: 8px; margin: 4px 0; width: 100%; box-sizing: border-box; }
+    .row { display:flex; gap:8px; }
+    .row > * { flex:1; }
+    ul { padding-left: 20px; }
+    small { color:#666; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Fase 1</h1>
+    <p>Front end para fase 1 Nube.</p>
+  </header>
+
+  <main>
+    <section class="card">
+      <h2>Lista de veículos</h2>
+      <p><small><code>GET /api/vehicles</code></small></p>
+      <button id="refreshBtn">Atualizar lista</button>
+      <ul id="vehiclesList"> </ul>
+    </section>
+
+    <section style="height:12px"></section>
+
+    <section class="card">
+      <h2>Adicionar veículo</h2>
+      <form id="addForm">
+        <label>
+          Nome
+          <input id="inputName" type="text" required placeholder="Ex: Carro" />
+        </label>
+        <label>
+          Preço (R$)
+          <input id="inputPrice" type="number" required step="0.01" placeholder="999.90" />
+        </label>
+        <div class="row">
+          <button type="submit">Salvar</button>
+          <button type="button" id="clearBtn">Limpar</button>
+        </div>
+      </form>
+      <div id="formMsg" role="status" aria-live="polite" style="margin-top:8px"></div>
+    </section>
+  </main>
+
+  <script>
+    const API_BASE = '/api';
+
+    async function fetchVehicles() {
+      const listEl = document.getElementById('vehiclesList');
+      listEl.innerHTML = '<li>Carregando...</li>';
+      try {
+        const res = await fetch(`${API_BASE}/vehicles`);
+        if (!res.ok) throw new Error('Erro ao buscar partes: ' + res.status);
+        const vehicles = await res.json();
+        if (!Array.isArray(vehicles)) throw new Error('Resposta inesperada');
+        if (vehicles.length === 0) listEl.innerHTML = '<li>Nenhum veículo encontrado</li>';
+        else listEl.innerHTML = vehicles.map(p => `<li>#${p.id ?? '-'} - ${escapeHtml(p.name)} — R$ ${Number(p.price).toFixed(2)}</li>`).join('');
+      } catch (err) {
+        listEl.innerHTML = '<li>Erro ao carregar. Veja console.</li>';
+        console.error(err);
+      }
+    }
+
+    function escapeHtml(s) {
+      return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":"&#39;"}[c]));
+    }
+
+    document.getElementById('refreshBtn').addEventListener('click', fetchVehicles);
+
+    document.getElementById('addForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const name = document.getElementById('inputName').value.trim();
+      const price = parseFloat(document.getElementById('inputPrice').value);
+      const msgEl = document.getElementById('formMsg');
+      msgEl.textContent = 'Enviando...';
+
+      try {
+        const res = await fetch(`${API_BASE}/vehicles`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ name, price })
+        });
+        if (!res.ok) throw new Error('Status ' + res.status);
+        const created = await res.json();
+        msgEl.textContent = 'Veículo criada com id ' + (created.id ?? '(sem id)');
+        document.getElementById('addForm').reset();
+        fetchVehicles();
+      } catch (err) {
+        msgEl.textContent = 'Erro ao salvar (veja console)';
+        console.error(err);
+      }
+    });
+
+    document.getElementById('clearBtn').addEventListener('click', () => {
+      document.getElementById('addForm').reset();
+      document.getElementById('formMsg').textContent = '';
+    });
+
+    fetchVehicles();
+  </script>
+</body>
+</html>

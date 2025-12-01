@@ -12,7 +12,7 @@ Sistema de gerenciamento e venda de veículos, desenvolvido como parte do proces
 Liste as ferramentas, frameworks e linguagens usadas:
 
 ## Tecnologias
-- Java 17
+- Java 17,
 - Spring Boot
 - Spring Security
 - Spring Data JPA
@@ -47,7 +47,7 @@ src/main/java/com/veiculos
 - VehicleSalesApplication.java
 
 src/main/resources
-- application.yml
+- application.properties
 
 7️⃣ Observações
 - Este projeto foi desenvolvido para fins acadêmicos e de avaliação no processo seletivo da Nube.
